@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ReviewsBox } from "./Reviews/ReviewsBox";
+import Image from "next/image";
 
 interface DescriptionBoxProps {
   description: string;
@@ -29,10 +30,12 @@ export const DescriptionBox: React.FC<DescriptionBoxProps> = ({
             Reviews
           </button>
         </div>
-        <img
+        <Image
           src="/assets/dog-mascot-inverted-grey.png"
           alt=""
           className="w-20 h-20 absolute md:right-36 right-6  z-10 -translate-y-6 "
+          height={100}
+          width={100}
         />
       </div>
 

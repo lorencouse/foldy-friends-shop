@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import Image from "next/image";
 import { ProductReview } from "../../../types";
 
 const renderStars = (rating: number) => {
@@ -8,12 +8,12 @@ const renderStars = (rating: number) => {
   const stars = [];
   for (let i = 0; i < rating; i++) {
     stars.push(
-      <img key={i} src={starIcon} alt="Full Star" className="h-4 w-4" />,
+      <Image key={i} src={starIcon} alt="Full Star" className="h-4 w-4" />,
     );
   }
   for (let i = rating; i < 5; i++) {
     stars.push(
-      <img key={i} src={starIconGray} alt="Gray Star" className="h-4 w-4" />,
+      <Image key={i} src={starIconGray} alt="Gray Star" className="h-4 w-4" />,
     );
   }
   return stars;
@@ -57,7 +57,7 @@ export const CreateStarRating = ({
   const stars = [];
   for (let i = 1; i <= 5; i++) {
     stars.push(
-      <img
+      <Image
         key={i}
         src={i <= rating ? starIcon : starIconGray}
         alt={i <= rating ? "Full Star" : "Gray Star"}
@@ -78,8 +78,6 @@ export const CreateStarRating = ({
 };
 
 export const StarRatingAverage = (props: { id: string }) => {
-
-
   const reviews: ProductReview[] = [];
 
   let totalRatings = 0;

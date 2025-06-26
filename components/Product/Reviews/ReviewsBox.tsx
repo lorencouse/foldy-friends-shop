@@ -19,6 +19,7 @@ export const ReviewsBox = (props: { id: string }) => {
           title={review.title}
           content={review.content}
           rating={review.rating}
+          key={review.id}
         />
       ))}
 

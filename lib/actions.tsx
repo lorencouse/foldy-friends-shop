@@ -28,7 +28,6 @@ export const getProductsFromCategory = async (
     .contains("categories", [category])
     .limit(limitCount);
   if (error || !data) return [];
-  console.log("Fetched products from category:", category, data);
   return data as Product[];
 };
 
@@ -53,20 +52,19 @@ export const getAllProducts = async (): Promise<Product[]> => {
   const { data, error } = await supabase.from("products").select("*");
   if (error || !data) return [];
 
-  console.log("Fetched products:", data);
   return data as Product[];
 };
 
-export const getUserProfile = async (
-  userId: string,
-): Promise<UserData | null> => {
-  const supabase = await createClient();
+// export const getUserProfile = async (
+//   userId: string,
+// ): Promise<UserData | null> => {
+//   const supabase = await createClient();
 
-  const { data, error } = await supabase
-    .from("users")
-    .select("*")
-    .eq("id", userId)
-    .single();
-  if (error || !data) return null;
-  return data as UserData;
-};
+//   const { data, error } = await supabase
+//     .from("users")
+//     .select("*")
+//     .eq("id", userId)
+//     .single();
+//   if (error || !data) return null;
+//   return data as UserData;
+// };
