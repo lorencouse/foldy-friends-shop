@@ -33,7 +33,7 @@ export const Item = ({
   };
 
   const handleProductClick = async () => {
-    setActiveCategory(productData.categories[0]);
+    setActiveCategory(productData.categories ? productData.categories[0] : "");
     redirect(`/shop/product/${productData.id}`);
   };
 
@@ -59,7 +59,7 @@ export const Item = ({
                   ? `https://lfuijoomjeqehavkvbhl.supabase.co/storage/v1/object/public/product-images//${productData.images[0]}`
                   : "/assets/dog-mascot.png"
               }
-              alt={productData.name}
+              alt={productData.name || "Product Image"}
               loading="lazy"
               className={`absolute inset-0 w-full h-full object-cover rounded-t-2xl ${loaded ? "loaded" : "loading"}`}
               onLoad={handleImageLoad}

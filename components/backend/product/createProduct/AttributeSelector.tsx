@@ -3,8 +3,8 @@ import React from "react";
 interface AttributeSelectorProps {
   heading: string;
   attributes: string[];
-  selectedAttributes: string[];
-  setSelectedAttributes: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedAttributes: string[] | null;
+  setSelectedAttributes: React.Dispatch<React.SetStateAction<string[] | null>>;
 }
 
 const AttributeSelector: React.FC<AttributeSelectorProps> = ({
@@ -18,12 +18,11 @@ const AttributeSelector: React.FC<AttributeSelectorProps> = ({
   const handleChange = (attribute: string) => {
     const normalizedAttribute = normalize(attribute);
     setSelectedAttributes((prevSelectedAttributes) => {
-      if (prevSelectedAttributes.map(normalize).includes(normalizedAttribute)) {
-        return prevSelectedAttributes.filter(
-          (s) => normalize(s) !== normalizedAttribute,
-        );
+      const prev = prevSelectedAttributes ?? [];
+      if (prev.map(normalize).includes(normalizedAttribute)) {
+        return prev.filter((s) => normalize(s) !== normalizedAttribute);
       } else {
-        return [...prevSelectedAttributes, attribute];
+        return [...prev, attribute];
       }
     });
   };
@@ -41,9 +40,11 @@ const AttributeSelector: React.FC<AttributeSelectorProps> = ({
             <input
               type="checkbox"
               id={attribute}
-              checked={selectedAttributes
-                .map(normalize)
-                .includes(normalize(attribute))}
+              checked={
+                (selectedAttributes ?? [])
+                  .map(normalize)
+                  .includes(normalize(attribute))
+              }
               onChange={() => handleChange(attribute)}
               className="mr-2"
             />

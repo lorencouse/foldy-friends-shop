@@ -15,10 +15,10 @@ export const useAddToCart = () => {
     const cartItem: CartItem = {
       key: itemKey,
       id: product.id,
-      name: product.name,
-      category: product.category,
+      name: product.name || "Unknown Product",
+      category: product.categories ? product.categories[0] : "Uncategorized",
       price: product.sale_price ?? product.full_price ?? 100,
-      image: product.images[0] ?? "",
+      image: product.images ? product.images[0] : "",
       quantity: 1,
       variation: variation ?? "",
     };

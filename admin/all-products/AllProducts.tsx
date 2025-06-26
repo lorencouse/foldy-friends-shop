@@ -7,6 +7,7 @@ import { Product } from "@/types";
 import { LoadingScreen } from "@/components/Product/LoadingScreen";
 import { VariationSelector } from "@/components/Product/VariantSelector";
 import { productCategories } from "@/data/constants";
+import Image from "next/image";
 
 const AllProducts = ({ products }: { products: Product[] }) => {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
@@ -48,7 +49,18 @@ const AllProducts = ({ products }: { products: Product[] }) => {
             <div className="prouct flex flex-row">
               <Link href={`/admin/edit-product/${product.id}`}>
                 <div>
-                  <img src={product.images[0]} alt={product.name} width="150" />
+                  <Image
+                    src={
+                      product.images &&
+                      product.images.length > 0 &&
+                      product.images[0]
+                        ? `https://lfuijoomjeqehavkvbhl.supabase.co/storage/v1/object/public/product-images//${product.images[0]}`
+                        : "/assets/dog-mascot.png"
+                    }
+                    alt={product.name || "Product Image"}
+                    width={150}
+                    height={150}
+                  />
                 </div>
               </Link>
               <div className="flex flex-col m-4">
@@ -58,8 +70,18 @@ const AllProducts = ({ products }: { products: Product[] }) => {
                   </p>
                 </Link>
                 <p className="">Price: ${product.sale_price}</p>
-                <p className="">Categories: {product.category}</p>
-                <p className="">Tags: {product.tags.join(", ")}</p>
+                <p className="">
+                  Categories:{" "}
+                  {product.categories && product.categories.length > 0
+                    ? product.categories.join(", ")
+                    : "Uncategorized"}
+                </p>
+                <p className="">
+                  Tags:{" "}
+                  {product.tags && product.tags.length > 0
+                    ? product.tags.join(", ")
+                    : "No Tags"}
+                </p>
                 <p>Product ID: {product.id}</p>
               </div>
               <Link href={`/product/${product.id}`}>

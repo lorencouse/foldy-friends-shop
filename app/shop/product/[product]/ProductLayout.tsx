@@ -32,10 +32,13 @@ const ProductLayout = ({
     <div className="lg:mx-16 md:mx-12 my-8 fade-in">
       <div className="flex flex-row flex-wrap">
         <div className="product-images lg:w-5/12 md:w-8/12 lg:mr-8 mx-3">
-          <ProductImages images={product.images} alt={product.name} />
+          <ProductImages images={product.images} alt={product.name || ""} />
         </div>
         <div className="product-info lg:w-6/12 text-left p-5">
-          <Breadcrumbs category={product.category} name={product.name} />
+          <Breadcrumbs
+            category={product.categories?.[0] || ""}
+            name={product.name || ""}
+          />
           <h1 className="md:text-5xl text-4xl">{product.name}</h1>
           <StarRatingAverage id={product.id} />
           <Prices oldPrice={product.full_price} newPrice={product.sale_price} />
@@ -48,7 +51,7 @@ const ProductLayout = ({
             />
           )}
           <AddToCartButton product={product} variation={currentVariation} />
-          {product.category && (
+          {product.categories && (
             <div>
               <div className="capitalize my-2">
                 <span className="font-bold">Categories:</span>{" "}
@@ -57,32 +60,33 @@ const ProductLayout = ({
                   className="badge badge-primary badge-outline cursor-pointer hover:scale-105 duration-200"
                 >
                   <span className="text-base-content cursor-pointer">
-                    {product.category}
+                    {product.categories[0]}
                   </span>
                 </Link>{" "}
               </div>
               <div className="capitalize flex flex-row flex-wrap items-center">
                 <span className="font-bold mr-2">Tags:</span>{" "}
-                {product.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="tag ml-1 mb-1 cursor-pointer hover:scale-105 duration-200"
-                  >
-                    <Link
-                      href={`/shop/tag/${tag}`}
-                      className="badge badge-secondary badge-outline"
+                {product.tags &&
+                  product.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="tag ml-1 mb-1 cursor-pointer hover:scale-105 duration-200"
                     >
-                      <span className="text-base-content">{tag}</span>
-                    </Link>
-                  </span>
-                ))}
+                      <Link
+                        href={`/shop/tag/${tag}`}
+                        className="badge badge-secondary badge-outline"
+                      >
+                        <span className="text-base-content">{tag}</span>
+                      </Link>
+                    </span>
+                  ))}
               </div>
             </div>
           )}
         </div>
       </div>
 
-      <DescriptionBox description={product.description} id={product.id} />
+      <DescriptionBox description={product.description || ""} id={product.id} />
       <div className="related-Products mt-20">
         <Collections products={relatedProducts} header="Related Products" />
       </div>

@@ -29,26 +29,33 @@ import {
 } from "@/data/constants";
 import Link from "next/link";
 import { VariationSelector } from "@/components/Product/VariantSelector";
+import Image from "next/image";
 
 const CreateProduct = ({ product }: { product: Product | null }) => {
   const [productInfo, setProductInfo] = useState<Product>(emptyProduct);
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [selectedVariations, setSelectedVariations] = useState<string[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<string[] | null>(
+    [],
+  );
+  const [selectedTags, setSelectedTags] = useState<string[] | null>([]);
+  const [selectedVariations, setSelectedVariations] = useState<string[] | null>(
+    [],
+  );
   const [images, setImages] = useState<FileList | null>(null);
 
   useEffect(() => {
     if (product) {
       console.log("Loading existing product:", product);
       setProductInfo(product);
-      setSelectedCategory(product.category);
+      setSelectedCategories(product.categories);
       setSelectedTags(product.tags);
       setSelectedVariations(product.variations);
     }
   }, [product]);
 
   const handleSaveProduct = async () => {
-    const imageUrls: string[] = [...productInfo.images];
+    const imageUrls: string[] = productInfo.images
+      ? [...productInfo.images]
+      : [];
     const storage = getStorage();
 
     const resizeImage = (file: File, height: number): Promise<Blob> => {
@@ -105,7 +112,7 @@ const CreateProduct = ({ product }: { product: Product | null }) => {
           sale_price: productInfo.sale_price,
           images: imageUrls,
           variations: selectedVariations,
-          category: selectedCategory,
+          categories: selectedCategories,
           tags: selectedTags,
           updated_at: new Date(),
         });
@@ -114,17 +121,15 @@ const CreateProduct = ({ product }: { product: Product | null }) => {
         // Create new product
         const docRef = await addDoc(collection(db, "products"), {
           ...productInfo,
-          full_price:
-            productInfo.full_price !== undefined
-              ? productInfo.full_price - 0.01
-              : null,
-          sale_price:
-            productInfo.sale_price !== undefined
-              ? productInfo.sale_price - 0.03
-              : null,
+          full_price: productInfo.full_price
+            ? productInfo.full_price - 0.01
+            : null,
+          sale_price: productInfo.sale_price
+            ? productInfo.sale_price - 0.03
+            : null,
           images: imageUrls,
           variations: selectedVariations,
-          category: selectedCategory,
+          categories: selectedCategories,
           tags: selectedTags,
           created_at: new Date(),
           updated_at: new Date(),
@@ -137,7 +142,7 @@ const CreateProduct = ({ product }: { product: Product | null }) => {
         alert("Product created successfully!");
         // Reset form fields
         setProductInfo(emptyProduct);
-        setSelectedCategory("");
+        setSelectedCategories([]);
         setSelectedTags([]);
         setSelectedVariations([]);
         setImages(null);
@@ -149,7 +154,7 @@ const CreateProduct = ({ product }: { product: Product | null }) => {
 
   const handleDeleteImage = async (e: React.MouseEvent<HTMLButtonElement>) => {
     const index = parseInt(e.currentTarget.dataset.index || "0", 10);
-    const imageUrl = productInfo.images[index];
+    const imageUrl = productInfo.images ? productInfo.images[index] : null;
 
     if (!imageUrl) {
       console.error("Image URL not found");
@@ -171,7 +176,9 @@ const CreateProduct = ({ product }: { product: Product | null }) => {
 
     try {
       await deleteObject(imageRef);
-      const updatedImages = productInfo.images.filter((_, i) => i !== index);
+      const updatedImages = productInfo.images
+        ? productInfo.images.filter((_, i) => i !== index)
+        : [];
       const db = getFirestore();
       const productRef = doc(db, "products", productInfo.id);
       await updateDoc(productRef, {
@@ -218,7 +225,7 @@ const CreateProduct = ({ product }: { product: Product | null }) => {
       </Link>
 
       <div className="create-product-information flex flex-col">
-        {productInfo.images.length > 0 && (
+        {productInfo.images && productInfo.images.length > 0 && (
           <div className="flex flex-col">
             <label className="ml-2 mt-4 font-semibold">Current Images: </label>
             <div className="flex flex-row">
@@ -231,10 +238,15 @@ const CreateProduct = ({ product }: { product: Product | null }) => {
                   >
                     x
                   </button>
-                  <img
-                    src={image}
-                    alt={productInfo.name}
-                    width="100"
+                  <Image
+                    src={
+                      image
+                        ? `https://lfuijoomjeqehavkvbhl.supabase.co/storage/v1/object/public/product-images//${image}`
+                        : "/assets/dog-mascot.png"
+                    }
+                    alt={productInfo.name || "Product Image"}
+                    width={100}
+                    height={100}
                     className="m-2"
                   />
                 </div>
@@ -263,11 +275,11 @@ const CreateProduct = ({ product }: { product: Product | null }) => {
           selectedAttributes={selectedVariations}
           setSelectedAttributes={setSelectedVariations}
         />
-        <VariationSelector
-          variations={productCategories}
+        <AttributeSelector
+          attributes={productCategories}
           heading="Category"
-          currentVariation={selectedCategory}
-          setCurrentVariation={setSelectedCategory}
+          selectedAttributes={selectedCategories}
+          setSelectedAttributes={setSelectedCategories}
         />
         <AttributeSelector
           attributes={productTags}

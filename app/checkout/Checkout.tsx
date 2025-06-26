@@ -12,19 +12,15 @@ import { Alert } from "@/components/Alert";
 import { emptyAddress } from "@/data/constants";
 import { redirect } from "next/navigation";
 
-const Checkout = ({ user }: { user: UserData | null }) => {
+const Checkout = () => {
   const [billing, setBilling] = useState<boolean>(false);
   const { cartCount } = useShopContext();
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
 
-  const [shippingInfo, setShippingInfo] = useState<AddressInfo>(
-    user ? user.shipping_info : emptyAddress,
-  );
+  const [shippingInfo, setShippingInfo] = useState<AddressInfo>(emptyAddress);
 
-  const [billingInfo, setBillingInfo] = useState<AddressInfo>(
-    user ? user.billing_info : emptyAddress,
-  );
+  const [billingInfo, setBillingInfo] = useState<AddressInfo>(emptyAddress);
 
   async function placeOrder() {
     if (

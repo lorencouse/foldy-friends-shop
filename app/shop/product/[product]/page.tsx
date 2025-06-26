@@ -34,7 +34,7 @@ const ProductPage = async ({
   }
 
   const relatedProductsList: Product[] = await getProductsFromCategory(
-    product.category,
+    product.categories?.[0] || "",
   );
   const relatedProducts: Product[] = shuffleProducts(
     relatedProductsList.filter((p) => p.id !== productId),

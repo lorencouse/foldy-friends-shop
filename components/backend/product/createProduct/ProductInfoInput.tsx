@@ -35,7 +35,7 @@ export const ProductInfoInput = ({
       <InputBox
         type="text"
         placeholder="Name"
-        value={productInfo.name}
+        value={productInfo.name || ""}
         onChange={handleInputChange}
         name="name"
       />
@@ -43,7 +43,7 @@ export const ProductInfoInput = ({
       <div className="flex flex-col ">
         <label className="ml-2 mt-4 font-semibold">Description: </label>
         <ReactQuill
-          value={productInfo.description}
+          value={productInfo.description || ""}
           onChange={handleDescriptionChange}
           className="mb-4"
         />
@@ -52,7 +52,7 @@ export const ProductInfoInput = ({
       <InputBox
         type="text"
         placeholder="SKU"
-        value={productInfo.sku}
+        value={productInfo.sku || ""}
         onChange={handleInputChange}
         name="sku"
       />
@@ -61,7 +61,7 @@ export const ProductInfoInput = ({
         <InputBox
           type="number"
           placeholder="Full Price"
-          value={productInfo.full_price}
+          value={productInfo.full_price ?? 0}
           onChange={handleInputChange}
           name="full_price"
         />

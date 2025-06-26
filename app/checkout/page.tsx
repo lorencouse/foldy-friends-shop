@@ -4,8 +4,8 @@ import { UserData } from "@/types";
 import { getUserProfile } from "@/lib/actions";
 
 const CheckoutPage = async () => {
-  const user: UserData | null = await getUserProfile();
-  return <Checkout user={user} />;
+  // const user: UserData | null = await getUserProfile();
+  return <Checkout  />;
 };
 
 export default CheckoutPage;

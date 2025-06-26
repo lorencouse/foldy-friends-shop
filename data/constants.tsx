@@ -8,12 +8,10 @@ export const emptyProduct: Product = {
   sale_price: 0,
   images: [],
   variations: [],
-  category: "",
+  categories: [],
   tags: [],
-  reviews: [],
-  created_at: new Date(),
-  updated_at: new Date(),
-  sold_to_date: 0,
+  created_at: "",
+  sold: 0,
   stock: 0,
   sku: "",
 };
@@ -40,13 +38,7 @@ export const productVariations = [
   "Black",
   "White",
 ];
-export const productCategories = [
-  "paper",
-  "tools",
-  "kits",
-  // "crafting supplies",
-  // "books",
-];
+export const productCategories = ["paper", "tools", "kits"];
 export const productTags = [
   "supplies",
   "scissors",
