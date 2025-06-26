@@ -18,7 +18,7 @@ export const useAddToCart = () => {
       name: product.name,
       category: product.category,
       price: product.sale_price ?? product.full_price ?? 100,
-      image: product.images?.[0] ?? "",
+      image: product.images[0] ?? "",
       quantity: 1,
       variation: variation ?? "",
     };

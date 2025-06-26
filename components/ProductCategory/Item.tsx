@@ -56,7 +56,7 @@ export const Item = ({
             <Image
               src={
                 Array.isArray(productData.images) && productData.images[0]
-                  ? `https://lfuijoomjeqehavkvbhl.supabase.co/storage/v1/object/public/product-images//${productData.images[0]}.jpg`
+                  ? `https://lfuijoomjeqehavkvbhl.supabase.co/storage/v1/object/public/product-images//${productData.images[0]}`
                   : "/assets/dog-mascot.png"
               }
               alt={productData.name}

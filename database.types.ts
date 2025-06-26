@@ -23,6 +23,7 @@ export type Database = {
           sold: number | null
           stock: number | null
           tags: string[] | null
+          variations: string[] | null
         }
         Insert: {
           categories?: string[] | null
@@ -37,6 +38,7 @@ export type Database = {
           sold?: number | null
           stock?: number | null
           tags?: string[] | null
+          variations?: string[] | null
         }
         Update: {
           categories?: string[] | null
@@ -51,6 +53,7 @@ export type Database = {
           sold?: number | null
           stock?: number | null
           tags?: string[] | null
+          variations?: string[] | null
         }
         Relationships: []
       }

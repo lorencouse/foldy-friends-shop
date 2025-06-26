@@ -34,7 +34,7 @@ export const ProductImages = ({
               <Image
                 src={
                   image
-                    ? `https://lfuijoomjeqehavkvbhl.supabase.co/storage/v1/object/public/product-images//${image}.jpg`
+                    ? `https://lfuijoomjeqehavkvbhl.supabase.co/storage/v1/object/public/product-images//${image}`
                     : "/assets/dog-mascot.png"
                 }
                 alt={alt}
@@ -56,7 +56,7 @@ export const ProductImages = ({
             className={`w-full h-auto ${loaded[currentImg] ? "loaded" : "loading"}`}
             src={
               images[currentImg]
-                ? `https://lfuijoomjeqehavkvbhl.supabase.co/storage/v1/object/public/product-images//${images[currentImg]}.jpg`
+                ? `https://lfuijoomjeqehavkvbhl.supabase.co/storage/v1/object/public/product-images//${images[currentImg]}`
                 : "/assets/dog-mascot.png"
             }
             alt={alt}

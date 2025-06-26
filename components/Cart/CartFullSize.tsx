@@ -7,6 +7,7 @@ import { ButtonInput } from "../BannerButton";
 import { CartQuantityButtons } from "../Cart/CartQuantityButtons";
 import { EmptyCart } from "./EmptyCart";
 import { redirect } from "next/navigation";
+import Image from "next/image";
 
 export const CartFullSize = () => {
   const { cartItems } = useShopContext();
@@ -71,10 +72,12 @@ const CartLineItem = ({ cartItem }: { cartItem: CartItem }) => {
         className="flex cart-item justify-center items-center product-image m-3"
         onClick={() => handleMobileMenuClick()}
       >
-        <img
-          src={cartItem.image}
+        <Image
+          src={`https://lfuijoomjeqehavkvbhl.supabase.co/storage/v1/object/public/product-images//${cartItem.image}`}
           alt={cartItem.name}
           className=" max-h-24 gallery-image rounded-lg cursor-pointer "
+          width={100}
+          height={100}
         />
       </div>
       <div

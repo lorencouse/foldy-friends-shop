@@ -25,7 +25,7 @@ export const VariationSelector = ({
   };
 
   const getBgColorClass = (variation: string) => {
-    return variationColorMap[variation.toLowerCase()] || "bg-gray-400";
+    return variationColorMap[variation] || "bg-gray-400";
   };
 
   return (
